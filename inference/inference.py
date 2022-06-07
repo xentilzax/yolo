@@ -86,6 +86,7 @@ def MainLoop():
     return True
 
 fPause = False
+numFrames = 0
 
 while True:
     if fDebugMode == True:
@@ -107,5 +108,7 @@ while True:
     else:
         if MainLoop() == False:
             break
-        
+
+    numFrames += 1
+    print("number frame complete: ",numFrames, end = '\r')
 
