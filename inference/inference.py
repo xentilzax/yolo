@@ -4,7 +4,7 @@ import sys
 from model import Model 
 
 """
-draw boundary boxes of objects on image
+drawing the boundaries of objects on the image
 """
 def drawBoxes(image, boxes, color):
     for box in boxes:
@@ -37,7 +37,7 @@ if len(sys.argv)==1:
 #CNN config
 configPath = "football.cfg"
 weightsPath = "football.weights"
-netSize= (800, 608)
+netSize= (608, 416)
 #Flags and variables
 sizeOutput = (0,0)
 fVideo = False
@@ -116,7 +116,11 @@ while True:
         if MainLoop() == False:
             break
 
-    dt = model.getTimeProcess()
+    total = model.getTimeProcess()
+    (Tpre, Tf, Tpost) = model.getDetailTimeProcess()
     numFrames += 1    
-    print("number frame complete: {}, fps: {}".format(numFrames, 1/dt), end = '\r')
+    print("number frame complete: {0}, "
+          "time: {1:.3f} sec, [{2:.3f}, {3:.3f}, {4:.3f}]".format(numFrames,
+                                              total,
+                                              Tpre, Tf, Tpost))
 

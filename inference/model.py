@@ -22,6 +22,9 @@ class Model:
         self._net.setPreferableBackend(backend)
         self._net.setPreferableTarget(target)
         self._timeProcess = -1
+        self._timePreProcess = -1
+        self._timeForwardProcess = -1
+        self._timePostProces = -1
         # determine only the *output* layer names that we need from YOLO
         self._ln = self._net.getLayerNames()
         self._ln = [self._ln[i[0] - 1] for i in self._net.getUnconnectedOutLayers()]
@@ -107,13 +110,23 @@ class Model:
         start = time.time()
         
         self.preProcessing(image)
+        preTime = time.time()
+
         layerOutputs = self._net.forward(self._ln)
+        forwardTime = time.time()
+
         boxes = self.postProcessing(layerOutputs)
         
         end = time.time()        
+        self._timePreProcess = preTime - start
+        self._timeForwardProcess = forwardTime - preTime
+        self._timePostProcess = end - forwardTime
         self._timeProcess = end-start
         
         return boxes
 
     def getTimeProcess(self):
         return self._timeProcess
+
+    def getDetailTimeProcess(self):
+        return (self._timePreProcess, self._timeForwardProcess, self._timePostProcess)
