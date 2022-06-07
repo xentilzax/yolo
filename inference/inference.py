@@ -71,7 +71,7 @@ def MainLoop():
     global image
     res, image = vs.read()
     if res == False or image is None:
-        print('Video end')
+        print('Process complete!')
         return False
 
 
@@ -109,6 +109,7 @@ while True:
         if MainLoop() == False:
             break
 
-    numFrames += 1
-    print("number frame complete: ",numFrames, end = '\r')
+    dt = model.getTimeProcess()
+    numFrames += 1    
+    print("number frame complete: {}, fps: {}".format(numFrames, 1/dt), end = '\r')
 
