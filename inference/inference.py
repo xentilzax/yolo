@@ -24,6 +24,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--input", help="path to the video file")
 ap.add_argument("-o", "--output", default="output.mp4", help="set output video name of file")
 ap.add_argument("-v", "--verbose", help="set verbose mode, show debug info", action='store_true')
+ap.add_argument("-c", "--config", default="football.cfg", help="config CNN")
+ap.add_argument("-w", "--weights", default="football.weights", help="weights CNN")
 ap.add_argument("-t", "--confidence", default=0.5, help="theshold confidence")
 ap.add_argument("-s", "--size", default="800x608", help="size output video")
 
@@ -35,8 +37,8 @@ if len(sys.argv)==1:
     sys.exit(1)
     
 #CNN config
-configPath = "football.cfg"
-weightsPath = "football.weights"
+configPath = args["config"]
+weightsPath = args["weights"]
 netSize= (800, 608)
 #Flags and variables
 sizeOutput = (0,0)
