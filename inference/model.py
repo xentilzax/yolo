@@ -11,8 +11,8 @@ class Model:
             weights: str,
             threshold: float,
             backend = cv2.dnn.DNN_BACKEND_CUDA,
-            target = cv2.dnn.DNN_TARGET_CUDA_FP16):
-        
+            target = cv2.dnn.DNN_TARGET_CUDA):
+
         self._netSize = netSize
         self._config = config
         self._weights = weights

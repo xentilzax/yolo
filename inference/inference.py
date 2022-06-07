@@ -37,7 +37,7 @@ if len(sys.argv)==1:
 #CNN config
 configPath = "football.cfg"
 weightsPath = "football.weights"
-netSize= (608, 416)
+netSize= (800, 608)
 #Flags and variables
 sizeOutput = (0,0)
 fVideo = False
