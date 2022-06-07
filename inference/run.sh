@@ -2,5 +2,7 @@ docker run -ti \
 -v $PWD:/workspace \
 --gpus all \
 --rm \
+-e INPUT_VIDEO=$1 \
+-e OUTPUT_VIDEO=$2 \
 xentilzax-opencv-cuda11.4.2:latest \
-bash python3 /workspace/inference.py -i=video3.mp4 -o=res-video3.mp4
+bash /workspace/script.sh
