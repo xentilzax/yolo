@@ -1,11 +1,11 @@
 docker build \
-    -f ubuntu20.04-amd64-cuda11.4.2 \
+    -f ubuntu20.04-amd64-cuda11.4.2.dockerfile \
     -t xentilzax-cuda11.4.2-base \
     .
     
     
 docker build \
-    -f opencv4.5.0+cuda11.4.2 \
+    -f opencv4.5.0+cuda11.4.2.dockerfile \
     -t xentilzax-opencv-cuda11.4.2:build \
     .
 
@@ -19,8 +19,12 @@ xentilzax-opencv-cuda11.4.2:build \
 bash /workspace/copy.sh
 
 docker build \
-    -f inference \
+    -f inference.dockerfile \
     -t xentilzax-opencv-cuda11.4.2 \
     .
 
+docker build \
+    -f train.dockerfile \
+    -t xentilzax-darknet \
+    .
 

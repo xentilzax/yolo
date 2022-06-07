@@ -8,12 +8,7 @@ ENV CUDA_HOME="/usr/local/cuda"
 ENV PATH="/usr/local/cuda/bin:${PATH}"
 ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 
-#RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
-#RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804
-
-#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends wget
-#RUN wget -qO - https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
-
+#FIX GPG NVIDIA key error 
 RUN rm -rf /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
 
 #
