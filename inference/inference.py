@@ -27,7 +27,7 @@ ap.add_argument("-v", "--verbose", help="set verbose mode, show debug info", act
 ap.add_argument("-c", "--config", default="football.cfg", help="config CNN")
 ap.add_argument("-w", "--weights", default="football.weights", help="weights CNN")
 ap.add_argument("-t", "--confidence", default=0.5, help="theshold confidence")
-ap.add_argument("-s", "--size", default="800x608", help="size output video")
+ap.add_argument("-s", "--size", help="size output video")
 
 args = vars(ap.parse_args())
 
