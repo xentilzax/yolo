@@ -61,6 +61,8 @@ RUN cd /darknet/ && \
 	sed -i -e "s/AVX=0/AVX=1/g" Makefile && \
     make -j4
 
+RUN apt-get install -y --no-install-recommends python3
+
 RUN rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
