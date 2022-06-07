@@ -11,8 +11,10 @@ ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:${LD_LIBRARY_PATH}"
 #RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
 #RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends wget
-RUN wget -qO - https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+#RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends wget
+#RUN wget -qO - https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+
+RUN rm -rf /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
 
 #
 # OpenCV - https://github.com/mdegans/nano_build_opencv/blob/master/build_opencv.sh
@@ -70,6 +72,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         v4l-utils \
         zlib1g-dev
 
+RUN ln -s /usr/include/x86_64-linux-gnu/cudnn_version_v8.h /usr/include/x86_64-linux-gnu/cudnn_version.h
 
 RUN rm -rf /var/lib/apt/lists/* \
     && apt-get clean

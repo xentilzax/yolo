@@ -1,4 +1,4 @@
-FROM xentilzax-cuda11.4.2-base
+FROM xentilzax-cuda11.4.2-base:latest
 
 #
 # Install OpenCV
@@ -6,19 +6,10 @@ FROM xentilzax-cuda11.4.2-base
 ARG OPENCV_VERSION="4.5.0"
 ARG CUDA="11.4.2"
 
+ADD opencv-cuda${CUDA}_${OPENCV_VERSION}_amd64.deb /opt/opencv.deb
 
-#
-# OpenCV looks for the cuDNN version in cudnn_version.h, but it's been renamed to cudnn_version_v8.h
-#
-RUN ln -s /usr/include/x86_64-linux-gnu/cudnn_version_v8.h /usr/include/x86_64-linux-gnu/cudnn_version.h
-
-COPY opencv-cuda${CUDA}.deb
-
-RUN DEBIAN_FRONTEND=noninteractive dpkg -i opencv-cuda${CUDA}.deb
-
-#favorite editor
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nano
-
+RUN DEBIAN_FRONTEND=noninteractive dpkg -i /opt/opencv.deb
+RUN rm /opt/opencv.deb
 RUN ldconfig
 
 RUN rm -rf /var/lib/apt/lists/* \
