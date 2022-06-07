@@ -25,6 +25,8 @@ ap.add_argument("-i", "--input", help="path to the video file")
 ap.add_argument("-o", "--output", default="output.mp4", help="set output video name of file")
 ap.add_argument("-v", "--verbose", help="set verbose mode, show debug info", action='store_true')
 ap.add_argument("-t", "--confidence", default=0.5, help="theshold confidence")
+ap.add_argument("-s", "--size", default="800x608", help="size output video")
+
 args = vars(ap.parse_args())
 
 #pring HELP if no args
@@ -50,10 +52,14 @@ if args.get("input", None) !=  None:
     fVideo = True
     vs = cv2.VideoCapture(args["input"])
     fps = vs.get(cv2.CAP_PROP_FPS)
-    print('input video fps: ',fps)
+    print('Input video fps: ',fps)
     width  = int(vs.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(vs.get(cv2.CAP_PROP_FRAME_HEIGHT))
     sizeOutput = (width, height)
+
+if args.get("size", None) !=  None:
+    sizeOutput = tuple([int(a) for a in args["size"].split("x")])
+    print("Output video resolution: ",sizeOutput)
 
 if args.get("output", None) !=  None:
     filename = args["output"]
@@ -81,7 +87,8 @@ def MainLoop():
     image = drawBoxes(image, boxes, (0, 255, 255))
 
     if fOutput == True and outputVideo != None:
-        outputVideo.write(image)    
+        resized = cv2.resize(image, sizeOutput)
+        outputVideo.write(resized)    
             
     return True
 

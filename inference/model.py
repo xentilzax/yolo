@@ -33,7 +33,8 @@ class Model:
     """
     def preProcessing(self, image):
         (self._H, self._W) = image.shape[:2]        
-        blob = cv2.dnn.blobFromImage(image, 1 / 255.0, self._netSize, swapRB=True, crop=False)        
+        resized = cv2.resize(image, self._netSize)
+        blob = cv2.dnn.blobFromImage(resized, 1 / 255.0, self._netSize, swapRB=True, crop=False)
         self._net.setInput(blob)
 
     """
