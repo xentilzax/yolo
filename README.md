@@ -31,7 +31,7 @@ cd train
 ```
 mkdir ball
 ```
-3. скопирать [данные](https://drive.google.com/drive/folders/1r5lvfH-rgB1W8HUmvHJuNpHD5Kief-EZ?usp=sharing) для обучения в директорию ball
+3. скопировать [данные](https://drive.google.com/drive/folders/1r5lvfH-rgB1W8HUmvHJuNpHD5Kief-EZ?usp=sharing) для обучения в директорию ball
 4. из директории train запустить скрипт
 ```
 ./train-detector.sh ball 1
