@@ -7,7 +7,7 @@
 	```
 3. put to project dir a config file. Name the config must be like present below:	
 	```custom.cfg```
-   If you does not put config file to dir, script will using yolo-tiny-custom.cfg for training.
+   If you does not put config file to dir, script will using custom.cfg for training from tools directory.
 
 4. run training command:
 	```./train-detector.sh <project dir> <number of classes>```
