@@ -5,5 +5,5 @@ docker run -ti \
 --gpus all \
 --rm \
 -p 8090:8090 \
-xentilzax-darknet:latest \
+xentilzax/darknet:latest \
 bash /tools/train-detector.sh

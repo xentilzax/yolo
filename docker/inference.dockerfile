@@ -1,4 +1,4 @@
-FROM xentilzax-cuda11.4.2-base:latest
+FROM xentilzax/base:cuda11.4.2
 
 #
 # Install OpenCV

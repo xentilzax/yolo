@@ -20,5 +20,5 @@ docker run -ti \
 --gpus all \
 --rm \
 -p 8090:8090 \
-darknet \
+xentilzax/darknet:latest \
 bash /tools/train-classifier.sh

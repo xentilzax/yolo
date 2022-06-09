@@ -1,4 +1,4 @@
-FROM xentilzax-cuda11.4.2-base:latest
+FROM xentilzax/base:cuda11.4.2
 
 ARG SRC=/opt
 ARG OPENCV_VERSION="4.5.0"
