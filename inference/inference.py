@@ -83,7 +83,7 @@ fPause = False
 numFrames = 0
 
 def MainLoop():
-    global image
+    global image, df
     res, image = vs.read()
     if res == False or image is None:
         print('Process complete!')
@@ -94,8 +94,7 @@ def MainLoop():
 
     for box in boxes:
         data = [numFrames, 0, box["confidence"], box["x"], box["y"], box["w"], box["h"]]
-        pd.concat([df, pd.DataFrame([data], columns=columns)], ignore_index=True)
-#        print(data)
+        df = pd.concat([df, pd.DataFrame([data], columns=columns)], ignore_index=True)
 
     # draw a bounding box rectangle and label on the image
     image = drawBoxes(image, boxes, (0, 255, 255))
@@ -130,10 +129,11 @@ while True:
     total = model.getTimeProcess()
     (Tpre, Tf, Tpost) = model.getDetailTimeProcess()
     numFrames += 1
+
     print("number frame complete: {0}, "
           "time: {1:.3f} sec, [{2:.3f}, {3:.3f}, {4:.3f}]".format(numFrames,
                                               total,
                                               Tpre, Tf, Tpost))
 
 if args.get("labeling", None)  != None:
-    df.to_csv(args["labeling"])
+    df.to_csv(args["labeling"], index=False)
