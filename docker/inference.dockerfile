@@ -12,5 +12,7 @@ RUN DEBIAN_FRONTEND=noninteractive dpkg -i /opt/opencv.deb
 RUN rm /opt/opencv.deb
 RUN ldconfig
 
+RUN pip3 install pandas
+
 RUN rm -rf /var/lib/apt/lists/* \
     && apt-get clean

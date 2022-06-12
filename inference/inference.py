@@ -11,15 +11,15 @@ def drawBoxes(image, boxes, color):
     for box in boxes:
         if box["class"] != 0:
             continue
-        
+
         (x, y) = (box["x"], box["y"])
         (w, h) = (box["w"], box["h"])
 
         cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
-        
+
     return image
 
-    
+
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--input", help="path to the video file")
@@ -37,7 +37,7 @@ args = vars(ap.parse_args())
 if len(sys.argv)==1:
     ap.print_help(sys.stderr)
     sys.exit(1)
-    
+
 #CNN config
 configPath = args["config"]
 weightsPath = args["weights"]
@@ -77,7 +77,8 @@ model = Model(netSize, configPath, weightsPath, 0.5)
 
 image = None
 columns=['frame_id', 'class', 'confidence', 'x','y','width','height']
-df = pd.DataFrame([], columns=columns)
+df = pd.DataFrame(columns=columns)
+#print(df)
 fPause = False
 numFrames = 0
 
@@ -92,20 +93,17 @@ def MainLoop():
     boxes = model.predict(image)
 
     for box in boxes:
-        pd.concat([df, pd.DataFrame([numFrames, 0, 
-                                     box["confidence"],
-                                     box["x"],
-                                     box["y"],
-                                     box["w"],
-                                     box["h"],], columns=columns)], ignore_index=True)    
+        data = [numFrames, 0, box["confidence"], box["x"], box["y"], box["w"], box["h"]]
+        pd.concat([df, pd.DataFrame([data], columns=columns)], ignore_index=True)
+#        print(data)
 
     # draw a bounding box rectangle and label on the image
     image = drawBoxes(image, boxes, (0, 255, 255))
 
     if fOutput == True and outputVideo != None:
         resized = cv2.resize(image, sizeOutput)
-        outputVideo.write(resized)    
-            
+        outputVideo.write(resized)
+
     return True
 
 
@@ -131,11 +129,11 @@ while True:
 
     total = model.getTimeProcess()
     (Tpre, Tf, Tpost) = model.getDetailTimeProcess()
-    numFrames += 1    
+    numFrames += 1
     print("number frame complete: {0}, "
           "time: {1:.3f} sec, [{2:.3f}, {3:.3f}, {4:.3f}]".format(numFrames,
                                               total,
                                               Tpre, Tf, Tpost))
 
-if args("labeling", None)  != None
+if args.get("labeling", None)  != None:
     df.to_csv(args["labeling"])

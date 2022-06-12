@@ -1,2 +1,3 @@
+
 cd /workspace
-python3 inference.py -i=$INPUT_VIDEO -o=$OUTPUT_VIDEO
+python3 inference.py -i=$INPUT_VIDEO -o=$OUTPUT_VIDEO -l=annotate.csv
