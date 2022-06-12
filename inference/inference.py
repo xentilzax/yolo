@@ -2,6 +2,7 @@ import cv2
 import argparse
 import sys
 from model import Model 
+import pandas as pd
 
 """
 drawing the boundaries of objects on the image
@@ -28,6 +29,7 @@ ap.add_argument("-c", "--config", default="football.cfg", help="config CNN")
 ap.add_argument("-w", "--weights", default="football.weights", help="weights CNN")
 ap.add_argument("-t", "--confidence", default=0.5, help="theshold confidence")
 ap.add_argument("-s", "--size", help="size output video")
+ap.add_argument("-l", "--labeling", help="path for saving annotation file")
 
 args = vars(ap.parse_args())
 
@@ -74,6 +76,10 @@ if args.get("output", None) !=  None:
 model = Model(netSize, configPath, weightsPath, 0.5)
 
 image = None
+columns=['frame_id', 'class', 'confidence', 'x','y','width','height']
+df = pd.DataFrame([], columns=columns)
+fPause = False
+numFrames = 0
 
 def MainLoop():
     global image
@@ -85,6 +91,14 @@ def MainLoop():
 
     boxes = model.predict(image)
 
+    for box in boxes:
+        pd.concat([df, pd.DataFrame([numFrames, 0, 
+                                     box["confidence"],
+                                     box["x"],
+                                     box["y"],
+                                     box["w"],
+                                     box["h"],], columns=columns)], ignore_index=True)    
+
     # draw a bounding box rectangle and label on the image
     image = drawBoxes(image, boxes, (0, 255, 255))
 
@@ -94,8 +108,6 @@ def MainLoop():
             
     return True
 
-fPause = False
-numFrames = 0
 
 while True:
     if fDebugMode == True:
@@ -105,7 +117,6 @@ while True:
                 break
             # show the output image
             cv2.imshow("output", image)
-            
 
         key = cv2.waitKey(1) & 0xFF
         if key == 32: #space
@@ -126,3 +137,5 @@ while True:
                                               total,
                                               Tpre, Tf, Tpost))
 
+if args("labeling", None)  != None
+    df.to_csv(args["labeling"])
