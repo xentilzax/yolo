@@ -36,6 +36,9 @@ sed -i -e "s/steps=STEP1,STEP2/steps=${STEP1},${STEP2}/g" /workspace/custom.cfg
 
 cd /tools && wget -nc  https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.conv.29
 
+#Use this weights for yolov4x-mish
+#cd /tools && wget -nc  https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4x-mish.conv.166
+
 #run training
 /darknet/darknet detector train \
 /workspace/obj.data \
@@ -44,3 +47,14 @@ cd /tools && wget -nc  https://github.com/AlexeyAB/darknet/releases/download/dar
 -dont_show \
 -mjpeg_port 8090 \
 -map
+
+output_dir=/workspace/$(date +%Y-%m-%d-%H:%M:%S)
+mkdir $output_dir
+chmod 755 $output_dir
+cp /workspace/backup/custom_final.weights $output_dir/custom.weights
+cp /workspace/custom.cfg $output_dir/
+mv /workspace/train.txt $output_dir/
+mv /workspace/test.txt $output_dir/
+mv /workspace/val.txt $output_dir/
+mv /tools/chart.png $output_dir/
+mv /tools/chart_custom.png $output_dir/
